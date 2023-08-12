@@ -1,3 +1,10 @@
+My personal [slstatus](https://tools.suckless.org/slstatus/) config
+it has icons for:
+- battery
+- date
+- keyboard input language
+
+
 **slstatus - suckless status**
 ==========================
 slstatus is a suckless status monitor for window managers that use WM_NAME
