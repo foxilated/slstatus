@@ -1,9 +1,10 @@
 /* See LICENSE file for copyright and license details. */
+
 /* interval between updates (in ms) */
-const unsigned int interval = 100;
+const unsigned int interval = 500;
 
 /* text to show if no value can be retrieved */
-static const char unknown_str[] = "n/a";
+static const char unknown_str[] = "void";
 
 /* maximum output string length */
 #define MAXLEN 2048
@@ -61,10 +62,21 @@ static const char unknown_str[] = "n/a";
  * wifi_essid          WiFi ESSID                      interface name (wlan0)
  */
 
+
+
+
+static const char vol[] = "[ `pactl list sinks | grep 'Mute: no'` ] \
+                           && printf \"`pactl list sinks | grep 'Volume:' | awk '{print $5;}'`\" \
+                           || printf 'Off'";
+
+
 static const struct arg args[] = {
-        /* function                 format              argument */
-	{ battery_state,            "%s",	        "BAT1"},
-        { battery_perc,             "   %s%%   ",     "BAT1" },
-        { keymap,                   "  %s   ",      NULL },
-        { datetime,                 "  %s",        "%A, %B %d %I:%M %p" },
+        /* function                       format                argument */
+      	{ battery_state,                  "%s ",	              "BAT1" },
+        { battery_perc,                   "%s%%  |  ",          "BAT1" },
+        { keymap,                         "%s  |  ",            NULL },
+       	{ ram_used, 	                    "%s  |  ",          	NULL },
+        { run_command,                    "%s  |  ",            vol },
+        { wifi_essid,                     "%s  |  ",            "wlo1" },
+        { datetime,                       "%s",                 "%a, %b %d %I:%M %p" },
 };
