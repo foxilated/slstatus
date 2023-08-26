@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* interval between updates (in ms) */
-const unsigned int interval = 500;
+const unsigned int interval = 100;
 
 /* text to show if no value can be retrieved */
 static const char unknown_str[] = "void";
@@ -65,10 +65,6 @@ static const char unknown_str[] = "void";
 
 
 
-static const char vol[] = "[ `pactl list sinks | grep 'Mute: no'` ] \
-                           && printf \"`pactl list sinks | grep 'Volume:' | awk '{print $5;}'`\" \
-                           || printf 'Off'";
-
 
 static const struct arg args[] = {
         /* function                       format                argument */
@@ -76,7 +72,7 @@ static const struct arg args[] = {
         { battery_perc,                   "%s%%  |  ",          "BAT1" },
         { keymap,                         "%s  |  ",            NULL },
        	{ ram_used, 	                    "%s  |  ",          	NULL },
-        { run_command,                    "%s  |  ",            vol },
+        { run_command, "%s%%  |  ", "/bin/sh -c \"amixer sget Master --card=1 | tail -n1 | grep -Po '\\[\\K[^%]*' | head -n1\"" },
         { wifi_essid,                     "%s  |  ",            "wlo1" },
         { datetime,                       "%s",                 "%a, %b %d %I:%M %p" },
 };
