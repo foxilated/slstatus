@@ -1,0 +1,9 @@
+{
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/home/khaled/stuff/code/slstatus",
+            "binaryPath": "/home/khaled/stuff/code/slstatus/slstatus",
+            "binaryArgs": []
+        }
+    ]
+}
