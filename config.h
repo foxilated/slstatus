@@ -64,24 +64,23 @@ static const char unknown_str[] = "void";
 
 static const struct arg args[] = {
     /* function                       format                argument */
-    {battery_state, "%s ", "BAT1"},
-    {battery_perc, "%s%%  |  ", "BAT1"},
-
-    // Keyboard Layout
-    { keymap,                         "%s  |  ",            NULL },
-
-    // Ram Used
-    {ram_used, "%s  |  ", NULL},
+    // Battery State
+    {run_command, "%s ", "/bin/sh -c \"cat /sys/class/power_supply/BAT1/status | grep -q 'Discharging' && echo '󰂌' || grep -q 'Charging' && echo '󰂏' || echo '󰂏'\""},
+    // Battery Percentage
+    {battery_perc, "%s%%   ", "BAT1"},
 
     // Audio State
     {run_command, "%s ", "/bin/sh -c \"amixer sget Master --card=1 | tail -n1 | grep -q '\\[on\\]' && echo ''  || echo '󰖁'\""},
     // Audio Volume
-    {run_command, "%s%%  |  ", "/bin/sh -c \"amixer sget Master --card=1 | tail -n1 | grep -Po '\\[\\K[^%]*' | head -n1\""},
+    {run_command, "%s%%   ", "/bin/sh -c \"amixer sget Master --card=1 | tail -n1 | grep -Po '\\[\\K[^%]*' | head -n1\""},
 
     // Wifi State
     {run_command, "%s ", "/bin/sh -c 'wifi_state=$(nmcli -t -f WIFI g); if [ \"$wifi_state\" = \"enabled\" ]; then echo \"󰤨\"; else echo \"󰤩\"; fi'"},
     // Wifi Network
-    {wifi_essid, "%s  |  ", "wlo1"},
+    {wifi_essid, "%s   ", "wlo1"},
+
+    // Keyboard Layout
+    {run_command, "%s   ", "/bin/sh -c \"setxkbmap -query | tail -n1 | grep -q 'us' && echo 'EN' || echo 'AR'\""},
 
     // Date & Time
     {datetime, "%s", "%a, %b %d %I:%M %p"},
